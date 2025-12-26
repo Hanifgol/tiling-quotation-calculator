@@ -5,13 +5,13 @@ import { Settings, QuotationData } from '../types';
 let aiInstance: GoogleGenAI | null = null;
 
 function getApiKey(): string {
-    let API_KEY = '';
-    try {
-        API_KEY = process.env.API_KEY || (window as any).process?.env?.API_KEY || '';
-    } catch (e) {
-        console.warn("[Gemini Service] Could not access process.env.API_KEY directly.");
-    }
+  try {
+    const API_KEY = import.meta.env.VITE_GOOGLE_GEMINI_API_KEY || '';
     return API_KEY;
+  } catch (e) {
+    console.warn("[Gemini Service] Error accessing API key");
+    return '';
+  }
 }
 
 function getAiClient(): GoogleGenAI | null {
